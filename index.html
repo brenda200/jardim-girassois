@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Jardim de Girassóis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Nunito:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- BODY -->
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <h1>Jardim de Girassóis</h1>
+        <p class="sub">Plante girassóis, margaridas, tulipas, íris e papoulas.</p>
+      </div>
+      <dl class="stats">
+        <div>
+          <dt>Dia</dt>
+          <dd id="stat-day">1</dd>
+        </div>
+        <div>
+          <dt>No campo</dt>
+          <dd id="stat-field">3</dd>
+        </div>
+        <div>
+          <dt>Colhidos</dt>
+          <dd id="stat-harvested">0</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="scene" id="scene" aria-label="Jardim">
+      <div class="sky">
+        <canvas class="paint day" id="paint-day" aria-hidden="true"></canvas>
+        <canvas class="paint night" id="paint-night" aria-hidden="true"></canvas>
+        <div class="tint"></div>
+        <div id="twinkles"></div>
+        <div class="sun" id="sun"></div>
+        <div class="moon" id="moon" hidden></div>
+        <span class="clock" id="clock">Manhã</span>
+      </div>
+      <div class="garden" id="garden" aria-label="Campo do jardim"></div>
+    </section>
+
+    <p class="message" id="message" aria-live="polite">Escolha Plantar e clique em qualquer lugar do campo.</p>
+
+    <div class="seeds" id="seeds" role="group" aria-labelledby="seeds-title">
+      <span class="seeds-title" id="seeds-title">Semente</span>
+    </div>
+
+    <nav class="tools" aria-label="Ferramentas">
+      <button type="button" class="tool" id="tool-plant" data-tool="plant" aria-pressed="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <ellipse cx="12" cy="12" rx="5" ry="8" transform="rotate(25 12 12)" />
+          <path d="M10 6.5l4 11" />
+        </svg>
+        <span>Plantar</span><kbd>1</kbd>
+      </button>
+      <button type="button" class="tool" id="tool-water" data-tool="water" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10h11v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <path d="M14 13l6-6" />
+          <path d="M18.5 5.5l3 3" />
+          <path d="M6 10a3 3 0 0 1 5 0" />
+        </svg>
+        <span>Regar</span><kbd>2</kbd>
+      </button>
+      <button type="button" class="tool" id="tool-sun" data-tool="sun" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" />
+        </svg>
+        <span>Dar sol</span><kbd>3</kbd>
+      </button>
+      <button type="button" class="tool" id="tool-harvest" data-tool="harvest" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="6" cy="18" r="3" />
+          <circle cx="18" cy="18" r="3" />
+          <path d="M8.2 16L19 4M15.8 16L5 4" />
+        </svg>
+        <span>Colher</span><kbd>4</kbd>
+      </button>
+      <button type="button" class="tool music-btn" id="music" aria-pressed="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M9 18V5l11-2v13" />
+          <circle cx="6.5" cy="18" r="2.5" />
+          <circle cx="17.5" cy="16" r="2.5" />
+        </svg>
+        <span>Música ligada</span><kbd>M</kbd>
+      </button>
+      <button type="button" class="tool reset" id="reset">Recomeçar</button>
+    </nav>
+
+    <details class="help" id="help">
+      <summary>Como jogar</summary>
+      <ul>
+        <li>Escolha a flor em <b>Semente</b> e, com <b>Plantar</b>, clique em qualquer lugar do campo.</li>
+        <li>O número em cada semente mostra quantas daquela flor você já colheu.</li>
+        <li>As plantas crescem sozinhas durante o dia e param à noite. Passam por 5 fases: semente, broto, muda, botão e
+          flor.</li>
+        <li>Quer acelerar? Use <b>Regar</b> ou <b>Dar sol</b> numa planta e ela pula um pedaço da fase. Não é
+          obrigatório.</li>
+        <li>Quando a flor abrir, use <b>Colher</b> para colher.</li>
+        <li>As sementes são infinitas: plante quantas quiser.</li>
+        <li>Dá para trocar de ferramenta com as teclas 1, 2, 3 e 4. A tecla M liga e desliga a música.</li>
+        <li>A musiquinha começa no primeiro clique e fica mais lenta e grave à noite.</li>
+        <li>Repare que só os girassóis acompanham o sol de leste a oeste e voltam para o leste à noite. Isso se chama
+          heliotropismo. As outras flores ficam paradas. As sementes do miolo seguem o ângulo de ouro, 137,5°.</li>
+        <li>O céu é pintado com pinceladas em redemoinho, inspirado em <i>A Noite Estrelada</i>, de Van Gogh (1889). Ele
+          também pintou íris e papoulas.</li>
+      </ul>
+    </details>
+  </div>
+  <!-- /BODY -->
+  <script src="script.js"></script>
+</body>
+
+</html>
